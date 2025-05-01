@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+</head>
+<body>
+    <header>
+        <h1>My Cart</h1>
+        <a href="products.html">Continue Shopping</a>
+        <ul id="cart-list"></ul>
+        <p id="total"></p>
+        <button onclick="clearCart()">Clear Cart</button>
+        <script>
+            function displayCart() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartList = document.getElementById('cart-list');
+                const total = document.getElementById('total');
+                cartList.innerHTML = '';
+                let totalPrice = 0;
+
+                cart.forEach(product => {
+                    const productItem = document.createElement('li');
+                    productItem.textContent = `${product.name} - $${product.price.toFixed(2)}`;
+                    cartList.appendChild(productItem);
+                    totalPrice += product.price;
+                    cartList.appendChild(productItem);
+                });
+
+                total.textContent = `Total: $${totalPrice.toFixed(2)}`;
+            }
+
+            function clearCart() {
+                localStorage.removeItem('cart');
+                displayCart();
+            }
+            displayCart();
+        </script>
+</body>
+</html>

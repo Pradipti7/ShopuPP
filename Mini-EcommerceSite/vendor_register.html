@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration</title>
+</head>
+<body>
+    <header>
+        <h1>Vendor Registration</h1></header>
+        <form onsubmit="ProductRegistration(event)">
+            <input type="text" id="vendor-name" placeholder="Vendor Name" required><br>
+            <input type="text" id="product-name" placeholder="Product Name" required><br>
+            <input type="number" id="product-price" placeholder="Product Price" required><br>
+            <input type="text" id="product-description" placeholder="Product Description" required><br>
+            <input type="file" id="product-image" accept="image/*" required><br>
+            <input type="text" id="product-quantity" placeholder="Product Quantity" required><br>
+            <input type="text" id="product-category" placeholder="Product Category" required><br>
+            <button type="submit">Register Product</button>   
+        </form>
+        <script>
+            function ProductRegistration(event) {
+                event.preventDefault();
+                const vendorName = document.getElementById('vendor-name').value;
+                const productName = document.getElementById('product-name').value;
+                const productPrice = parseFloat(document.getElementById('product-price').value);
+                const productDescription = document.getElementById('product-description').value;
+                const productImage = document.getElementById('product-image').files[0];
+                const productQuantity = parseInt(document.getElementById('product-quantity').value);
+                const productCategory = document.getElementById('product-category').value;
+
+                const newProduct = {
+                    vendorName,
+                    productName,
+                    productPrice,
+                    productDescription,
+                    productImage: URL.createObjectURL(productImage),
+                    productQuantity,
+                    productCategory
+                };
+                const products = JSON.parse(localStorage.getItem('products')) || [];
+                products.push(newProduct);
+                localStorage.setItem('products', JSON.stringify(products));
+                alert("Product Registered Successfully!");
+                e.target.reset();
+                console.log("Product Registered:", newProduct);
+            }
+        </script>
+    
+</body>
+</html>

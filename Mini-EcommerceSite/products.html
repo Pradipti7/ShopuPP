@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products</title>
+</head>
+<body>
+    <header> 
+        <h1>ShopUpp Products </h1><a href="cart.html">Cart</a>
+    </header>
+    <main id="product-list"></main>
+
+    <script>
+        const products = [
+            { id: 1, name: "Product 1", price: 29.99 },
+            { id: 2, name: "Product 2", price: 39.99 },
+            { id: 3, name: "Product 3", price: 49.99 }
+        ];
+
+        const productList = document.getElementById('product-list');
+
+        products.forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.innerHTML = `
+                <h2>${product.name}</h2>
+                <p>Price: $${product.price.toFixed(2)}</p>
+                <button onclick="addToCart(${product.id})">Add to Cart</button>
+            `;
+            productList.appendChild(productItem);
+        });
+
+        function addToCart(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+            alert(`Product ${productId} added to cart!`);
+        };
+    </script>
+</body>
+</html>
